@@ -8,21 +8,40 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.uc3m.laboratorio1.R
 import com.uc3m.laboratorio1.databinding.FragmentListBinding
+import com.uc3m.laboratorio1.viewModels.StudentViewModel
 
 
 class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
+    private lateinit var studentViewModel: StudentViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val adapter = ListAdapter()
+        val recyclerView = binding.recyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        studentViewModel = ViewModelProvider(this).get(StudentViewModel::class.java)
+        studentViewModel.readAll.observe(viewLifecycleOwner, {
+            student -> adapter.setData(student)
+        })
+
+        binding.addButton.setOnClickListener{
+            findNavController().navigate(R.id.action_listFragment_to_saveFragment)
+        }
 
         return view
     }
+
+
+
 
 }
