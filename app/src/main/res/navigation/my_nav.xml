@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -13,7 +13,11 @@
         <action
             android:id="@+id/action_listFragment_to_saveFragment"
             app:destination="@id/saveFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/saveFragment"
         android:name="com.uc3m.laboratorio1.views.SaveFragment"
@@ -23,4 +27,14 @@
             android:id="@+id/action_saveFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.uc3m.laboratorio1.views.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+
+
 </navigation>

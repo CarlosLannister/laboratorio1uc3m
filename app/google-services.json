@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40027233982",
+    "project_id": "laboratorio1-fda00",
+    "storage_bucket": "laboratorio1-fda00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40027233982:android:3283386c3ca7f52f5188ef",
+        "android_client_info": {
+          "package_name": "com.uc3m.laboratorio1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40027233982-ahpt5r7uuepp7apr91bvhnuurdpr2hp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT-PM7ojKGqIdK4CME4dkbfjI2i7kDwn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40027233982-ahpt5r7uuepp7apr91bvhnuurdpr2hp3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
