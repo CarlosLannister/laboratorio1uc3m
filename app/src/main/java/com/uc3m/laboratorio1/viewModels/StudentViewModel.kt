@@ -47,7 +47,12 @@ class StudentViewModel(application: Application): AndroidViewModel(application) 
             repository.addStudent(student)
         }
     }
-
+    fun checkKey(): Boolean {
+        val keystore: KeyStore = KeyStore.getInstance("AndroidKeyStore")
+        keystore.load(null)
+        val secretKeyEntry = keystore.getEntry("MyKeyStore", null) as KeyStore.SecretKeyEntry
+        return secretKeyEntry.secretKey != null
+    }
     fun getKey(): SecretKey {
         val keystore: KeyStore = KeyStore.getInstance("AndroidKeyStore")
         keystore.load(null)

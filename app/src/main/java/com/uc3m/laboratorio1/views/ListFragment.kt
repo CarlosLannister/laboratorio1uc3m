@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.uc3m.laboratorio1.R
 import com.uc3m.laboratorio1.databinding.FragmentListBinding
 import com.uc3m.laboratorio1.viewModels.StudentViewModel
+import java.lang.Exception
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -36,6 +37,27 @@ class ListFragment : Fragment() {
         binding.user.text = currentUser?.displayName
 
         studentViewModel = ViewModelProvider(this).get(StudentViewModel::class.java)
+
+        if (!studentViewModel.checkKey()){
+            val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+            val keyGenParameterSpec = KeyGenParameterSpec
+                    .Builder("MyKeyStore", KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .build()
+
+            keyGenerator.init(keyGenParameterSpec)
+            keyGenerator.generateKey()
+        }
+
+        /*
+          https://stackoverflow.com/questions/992019/java-256-bit-aes-password-based-encryption
+
+          SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+          KeySpec spec = new PBEKeySpec(password, salt, 65536, 256);
+          SecretKey tmp = factory.generateSecret(spec);
+          SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+         */
 
         val adapter = ListAdapter(studentViewModel)
         val recyclerView = binding.recyclerView
