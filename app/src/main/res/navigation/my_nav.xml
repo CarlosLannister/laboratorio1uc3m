@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.uc3m.laboratorio1.views.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="Login to 26" >
         <action
             android:id="@+id/action_loginFragment_to_listFragment"
             app:destination="@id/listFragment" />

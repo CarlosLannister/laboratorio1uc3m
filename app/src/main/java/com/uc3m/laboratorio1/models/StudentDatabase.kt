@@ -29,7 +29,5 @@ abstract class StudentDatabase: RoomDatabase() {
                 return instance
             }
         }
-
     }
-
 }

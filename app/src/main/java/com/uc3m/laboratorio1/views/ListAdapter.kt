@@ -1,41 +1,47 @@
 package com.uc3m.laboratorio1.views
 
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.ACTION_VIEW
-import android.net.Uri
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.uc3m.laboratorio1.R
 import com.uc3m.laboratorio1.databinding.RecyclerViewItemBinding
 import com.uc3m.laboratorio1.models.Student
+import com.uc3m.laboratorio1.viewModels.StudentViewModel
 
-
-class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(private val viewModel: StudentViewModel) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var studentList = emptyList<Student>()
 
-    class MyViewHolder(val mContext: Context, val binding: RecyclerViewItemBinding): RecyclerView.ViewHolder(binding.root){
+    class MyViewHolder(val mContext: Context,
+                       val binding: RecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root){
         init {
+            var navController: NavController? = null
             binding.firstName.setOnClickListener{
                 val position: Int = adapterPosition
+                navController = Navigation.findNavController(itemView)
+
+                navController!!.navigate(R.id.action_listFragment_to_saveFragment)
                 Toast.makeText(itemView.context, "You clicked on item ${position +1}", Toast.LENGTH_SHORT).show()
 
+                /*
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
                 mContext.startActivity(intent)
+
+                 */
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = RecyclerViewItemBinding.inflate(LayoutInflater.from(parent.context), parent,
                 false)
-
         return MyViewHolder(parent.context, binding)
     }
 
@@ -44,7 +50,11 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         with(holder){
             binding.firstName.text = currentItem.firstName.toString()
             binding.LastName.text = currentItem.lastName.toString()
-            binding.age.text = currentItem.age.toString()
+            //binding.age.text = currentItem.age.toString()
+            val iv: ByteArray = Base64.decode(currentItem.iv, Base64.DEFAULT)
+            val text: ByteArray = Base64.decode(currentItem.encryptedAge, Base64.DEFAULT)
+
+            binding.age.text = viewModel.decryptData(iv, text)
         }
     }
 
@@ -56,5 +66,4 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         this.studentList = studentList
         notifyDataSetChanged()
     }
-
 }
